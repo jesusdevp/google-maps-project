@@ -8,10 +8,10 @@ class Map extends Component {
     super(props);
     this.state = {
       markers: this.props.markers,
-      insteval: "",
-      acutualPosition: 0,
-      currentLat: 0,
-      currentLng: 0
+      interval: "",
+      actualPosition: 0,
+      currentLat: this.props.centerMapCoordinates[0],
+      currentLng: this.props.centerMapCoordinates[1]
     };
     this.timer = this.timer.bind(this);
   }
@@ -25,15 +25,39 @@ class Map extends Component {
     clearInterval(this.state.interval);
   }
 
-  timer() {}
+  timer() {
+    const { markers, actualPosition } = this.state;
+    this.setState({
+      actualPosition:
+        actualPosition + 1 < markers.length ? actualPosition + 1 : 0,
+      currentLat: markers[actualPosition].lat,
+      currentLng: markers[actualPosition].lng
+    });
+  }
 
   render() {
+    const { markers, currentLat, currentLng } = this.state;
+    let dynamicMarkers;
+    if (markers) {
+      dynamicMarkers = markers.map((value, index) => {
+        return (
+          <Marker
+            key={index}
+            position={{ lat: value.lat, lng: value.lng }}
+            defaultTitle={value.name}
+            icon={value.icon}
+          />
+        );
+      });
+    }
     const MyMapComponent = withGoogleMap(props => (
       <GoogleMap
         defaultZoom={14}
-        defaultCenter={{ lat: 19.39029, lng: -99.2828898 }}
+        defaultCenter={{ lat: currentLat, lng: currentLng }}
         defaultTitle="Mapa"
-      ></GoogleMap>
+      >
+        {dynamicMarkers}
+      </GoogleMap>
     ));
     return (
       <MyMapComponent
