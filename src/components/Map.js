@@ -12,7 +12,7 @@ class Map extends Component {
     const MyMapComponent = withGoogleMap(props => (
       <GoogleMap
         defaultZoom={14}
-        position={{ lat: 19.39029, lng: -99.2828898 }}
+        defaultCenter={{ lat: 19.39029, lng: -99.2828898 }}
         defaultTitle="Mapa"
       ></GoogleMap>
     ));

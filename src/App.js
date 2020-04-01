@@ -12,6 +12,20 @@ class App extends Component {
         <div className="card">
           <div className="card-content">
             <MyMap ref="map" />
+            <div>
+              <button className="waves-effect waves-light btn">
+                <i className="material-icons">keyboard_arrow_left</i>
+              </button>
+              <button className="waves-effect waves-light btn">
+                <i className="material-icons">play_arrow</i>
+              </button>
+              <button className="waves-effect waves-light btn">
+                <i className="material-icons">stop</i>
+              </button>
+              <button className="waves-effect waves-light btn">
+                <i className="material-icons">keyboard_arrow_right</i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
