@@ -4,8 +4,11 @@ import { GoogleMap, Marker, withGoogleMap } from "react-google-maps";
 const google = window.google;
 
 class Map extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      markers: this.props.markers
+    };
   }
 
   render() {
