@@ -29,12 +29,12 @@ class Map extends Component {
 
   timer() {
     const { markers, actualPosition } = this.state;
-    this.setState({
-      actualPosition:
-        actualPosition + 1 < markers.length ? actualPosition + 1 : 0,
-      currentLat: markers[actualPosition].lat,
-      currentLng: markers[actualPosition].lng
-    });
+
+    this.updateStates(
+      actualPosition + 1 < markers.length ? actualPosition + 1 : 0,
+      markers[actualPosition].lat,
+      markers[actualPosition].lng
+    );
   }
 
   onPlay() {
@@ -44,30 +44,35 @@ class Map extends Component {
     this.setState({ autoPlay: false });
   }
   onNext() {
-    this.setState({
-      actualPosition:
-        this.state.actualPosition + 1 < this.state.markers.length
-          ? this.state.actualPosition + 1
-          : 0,
-      currentLat: this.state.markers[this.state.actualPosition].lat,
-      currentLatLng: this.state.markers[this.state.actualPosition].lng
-    });
+    const { markers, actualPosition } = this.state;
+
+    this.updateStates(
+      actualPosition + 1 < markers.length ? actualPosition + 1 : 0,
+      markers[actualPosition].lat,
+      markers[actualPosition].lng
+    );
   }
 
   onPrevious() {
+    const { markers, actualPosition } = this.state;
     let newPosition;
-    if (
-      this.state.actualPosition - 1 < this.state.markers.length &&
-      this.state.actualPosition - 1 > 0
-    ) {
-      newPosition = this.state.actualPosition - 1;
+    if (actualPosition - 1 < markers.length && actualPosition - 1 > 0) {
+      newPosition = actualPosition - 1;
     } else {
       newPosition = 0;
     }
+    this.updateStates(
+      newPosition,
+      markers[actualPosition].lat,
+      markers[actualPosition].lng
+    );
+  }
+
+  updateStates(newPosition, newLat, newLng) {
     this.setState({
       actualPosition: newPosition,
-      currentLat: this.state.markers[this.state.actualPosition].lat,
-      currentLng: this.state.markers[this.state.actualPosition].lng
+      currentLat: newLat,
+      currentLng: newLng
     });
   }
 
