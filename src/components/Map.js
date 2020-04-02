@@ -11,13 +11,15 @@ class Map extends Component {
       interval: "",
       actualPosition: 0,
       currentLat: this.props.centerMapCoordinates[0],
-      currentLng: this.props.centerMapCoordinates[1]
+      currentLng: this.props.centerMapCoordinates[1],
+      autoPlay: true
     };
     this.timer = this.timer.bind(this);
+    this.onPlay = this.onPlay.bind(this);
   }
 
   componentDidMount() {
-    let interval = setInterval(this.timer, 3000);
+    let interval = setInterval(this.timer, 8000);
     this.setState({ interval });
   }
 
@@ -35,8 +37,26 @@ class Map extends Component {
     });
   }
 
+  onPlay() {
+    this.setState({ autoPlay: true });
+  }
+  onStop() {
+    this.setState({ autoPlay: false });
+  }
+  onNext() {
+    this.setState({
+      actualPosition:
+        this.state.actualPosition + 1 < this.state.markers.length
+          ? this.state.actualPosition + 1
+          : 0,
+      currentLat: this.state.markers[this.state.actualPosition].lat,
+      currentLatLng: this.state.markers[this.state.actualPosition].lng
+    });
+  }
+
   render() {
-    const { markers, currentLat, currentLng } = this.state;
+    const { autoPlay, markers, currentLat, currentLng } = this.state;
+    const { centerMapCoordinates } = this.props;
     let dynamicMarkers;
     if (markers) {
       dynamicMarkers = markers.map((value, index) => {
@@ -50,10 +70,14 @@ class Map extends Component {
         );
       });
     }
-    const MyMapComponent = withGoogleMap(props => (
+    const MyMapComponent = withGoogleMap component(props => (
       <GoogleMap
         defaultZoom={14}
-        defaultCenter={{ lat: currentLat, lng: currentLng }}
+        defaultCenter={
+          autoPlay
+            ? { lat: currentLat, lng: currentLng }
+            : { lat: centerMapCoordinates[0], lng: centerMapCoordinates[1] }
+        }
         defaultTitle="Mapa"
       >
         {dynamicMarkers}
