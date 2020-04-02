@@ -18,14 +18,14 @@ class Map extends Component {
     this.onPlay = this.onPlay.bind(this);
   }
 
-  componentDidMount() {
-    let interval = setInterval(this.timer, 8000);
-    this.setState({ interval });
-  }
+  //   componentDidMount() {
+  //     let interval = setInterval(this.timer, 8000);
+  //     this.setState({ interval });
+  //   }
 
-  componentWillUnmount() {
-    clearInterval(this.state.interval);
-  }
+  //   componentWillUnmount() {
+  //     clearInterval(this.state.interval);
+  //   }
 
   timer() {
     const { markers, actualPosition } = this.state;
@@ -54,6 +54,23 @@ class Map extends Component {
     });
   }
 
+  onPrevious() {
+    let newPosition;
+    if (
+      this.state.actualPosition - 1 < this.state.markers.length &&
+      this.state.actualPosition - 1 > 0
+    ) {
+      newPosition = this.state.actualPosition - 1;
+    } else {
+      newPosition = 0;
+    }
+    this.setState({
+      actualPosition: newPosition,
+      currentLat: this.state.markers[this.state.actualPosition].lat,
+      currentLng: this.state.markers[this.state.actualPosition].lng
+    });
+  }
+
   render() {
     const { autoPlay, markers, currentLat, currentLng } = this.state;
     const { centerMapCoordinates } = this.props;
@@ -70,7 +87,7 @@ class Map extends Component {
         );
       });
     }
-    const MyMapComponent = withGoogleMap component(props => (
+    const MyMapComponent = withGoogleMap(props => (
       <GoogleMap
         defaultZoom={14}
         defaultCenter={

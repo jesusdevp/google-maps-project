@@ -55,7 +55,7 @@ class App extends Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.next = this.next.bind(this);
-    // this.previous = this.previous.bind(this);
+    this.previous = this.previous.bind(this);
   }
   play() {
     this.refs.map.onPlay();
@@ -66,9 +66,9 @@ class App extends Component {
   next() {
     this.refs.map.onNext();
   }
-  // previous() {
-  //   this.refs.map.onPrevious();
-  // }
+  previous() {
+    this.refs.map.onPrevious();
+  }
   render() {
     const { markers } = this.state;
     return (
