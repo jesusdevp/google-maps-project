@@ -17,15 +17,13 @@ class Map extends Component {
     this.timer = this.timer.bind(this);
     this.onPlay = this.onPlay.bind(this);
   }
-
-  //   componentDidMount() {
-  //     let interval = setInterval(this.timer, 8000);
-  //     this.setState({ interval });
-  //   }
-
-  //   componentWillUnmount() {
-  //     clearInterval(this.state.interval);
-  //   }
+  // componentDidMount() {
+  //   let interval = setInterval(this.timer, 8000);
+  //   this.setState({ interval });
+  // }
+  // componentWillUnmount() {
+  //   clearInterval(this.state.interval);
+  // }
 
   timer() {
     const { markers, actualPosition } = this.state;
